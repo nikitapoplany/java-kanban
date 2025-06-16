@@ -1,4 +1,4 @@
-package taskmanager;
+package model;
 
 /**
  * Класс, представляющий Подзадачу, которая является частью Эпика
@@ -59,10 +59,10 @@ public class Subtask extends Task {
     @Override
     public String toString() {
         return "Subtask{" +
-                "name='" + name + '\'' +
-                ", description='" + description + '\'' +
-                ", id=" + id +
-                ", status=" + status +
+                "name='" + getName() + '\'' +
+                ", description='" + getDescription() + '\'' +
+                ", id=" + getId() +
+                ", status=" + getStatus() +
                 ", epicId=" + epicId +
                 '}';
     }

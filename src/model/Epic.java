@@ -1,4 +1,4 @@
-package taskmanager;
+package model;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,7 +9,7 @@ import java.util.List;
  */
 public class Epic extends Task {
     // Список идентификаторов подзадач, принадлежащих этому эпику
-    private List<Integer> subtaskIds;
+    private final List<Integer> subtaskIds;
 
     /**
      * Конструктор для создания нового Эпика
@@ -61,10 +61,10 @@ public class Epic extends Task {
     @Override
     public String toString() {
         return "Epic{" +
-                "name='" + name + '\'' +
-                ", description='" + description + '\'' +
-                ", id=" + id +
-                ", status=" + status +
+                "name='" + getName() + '\'' +
+                ", description='" + getDescription() + '\'' +
+                ", id=" + getId() +
+                ", status=" + getStatus() +
                 ", subtaskIds=" + subtaskIds +
                 '}';
     }

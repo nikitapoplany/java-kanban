@@ -1,4 +1,4 @@
-package taskmanager;
+package model;
 
 import java.util.Objects;
 
@@ -6,10 +6,10 @@ import java.util.Objects;
  * Базовый класс, представляющий задачу в трекере задач
  */
 public class Task {
-    protected String name;
-    protected String description;
-    protected int id;
-    protected TaskStatus status;
+    private String name;
+    private String description;
+    private int id;
+    private TaskStatus status;
 
     /**
      * Конструктор для создания новой задачи
