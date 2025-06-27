@@ -10,7 +10,7 @@ import taskmanager.*;
 public class Main {
     public static void main(String[] args) {
         // Создаем менеджер задач
-        TaskManager taskManager = new TaskManager();
+        TaskManager taskManager = Managers.getDefault();
 
         // Создаем две обычные задачи
         Task task1 = new Task("Задача 1", "Пусть здесь будет описание задачи 1");
@@ -105,6 +105,19 @@ public class Main {
         System.out.println("\nПодзадачи после удаления эпика 2:");
         for (Subtask subtask : taskManager.getAllSubtasks()) {
             System.out.println(subtask);
+        }
+
+        // Демонстрация работы истории просмотров
+        System.out.println("\n=== История просмотров ===");
+        // Получаем задачи и эпики для добавления в историю
+        taskManager.getTaskById(task2.getId());
+        taskManager.getEpicById(epic1.getId());
+        taskManager.getSubtaskById(subtask1.getId());
+        taskManager.getSubtaskById(subtask2.getId());
+
+        // Выводим историю просмотров
+        for (Task task : taskManager.getHistory()) {
+            System.out.println(task);
         }
     }
 }
