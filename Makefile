@@ -10,7 +10,7 @@ CLASS_PATH="out/production/java-kanban:out/test/java-kanban:lib/*"
 compile:
 	@echo "Compiling Java files..."
 	@javac -d out/production/java-kanban -cp $(CLASS_PATH) src/model/*.java src/taskmanager/*.java src/Main.java
-	@javac -d out/test/java-kanban -cp $(CLASS_PATH) src/test/taskmanager/*.java
+	@javac -d out/test/java-kanban -cp $(CLASS_PATH) test/taskmanager/*.java
 
 clean:
 	@echo "Cleaning compiled files..."
