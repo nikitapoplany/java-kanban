@@ -166,12 +166,10 @@ public class InMemoryTaskManager implements TaskManager {
         for (Integer id : subtasks.keySet()) {
             historyManager.remove(id);
         }
-        
         // Удаляем все эпики из истории просмотров перед очисткой
         for (Integer id : epics.keySet()) {
             historyManager.remove(id);
         }
-        
         // Удалить все подзадачи
         subtasks.clear();
 
@@ -260,7 +258,6 @@ public class InMemoryTaskManager implements TaskManager {
         for (Integer id : subtasks.keySet()) {
             historyManager.remove(id);
         }
-        
         for (Epic epic : epics.values()) {
             epic.clearSubtasks();
             epic.setStatus(TaskStatus.NEW);
