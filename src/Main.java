@@ -88,6 +88,7 @@ public class Main {
     /**
      * Вспомогательный метод для вывода истории просмотров
      */
+
     private static void printHistory(TaskManager taskManager) {
         System.out.println("История просмотров:");
         for (Task task : taskManager.getHistory()) {
