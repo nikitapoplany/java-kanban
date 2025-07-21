@@ -14,7 +14,6 @@ public class Main {
 
         System.out.println("=== Демонстрация работы обновленной истории просмотров ===");
         System.out.println("1. Создаем задачи, эпики и подзадачи");
-        
         // Создаем две обычные задачи
         Task task1 = new Task("Задача 1", "Описание задачи 1");
         Task task2 = new Task("Задача 2", "Описание задачи 2");
@@ -44,46 +43,36 @@ public class Main {
 
         // 2. Запрашиваем задачи несколько раз в разном порядке
         System.out.println("\n2. Запрашиваем задачи и проверяем историю просмотров");
-        
         System.out.println("\nЗапрашиваем задачу 1");
         taskManager.getTaskById(task1.getId());
         printHistory(taskManager);
-        
         System.out.println("\nЗапрашиваем эпик 1");
         taskManager.getEpicById(epic1.getId());
         printHistory(taskManager);
-        
         System.out.println("\nЗапрашиваем подзадачу 1.1");
         taskManager.getSubtaskById(subtask1.getId());
         printHistory(taskManager);
-        
         System.out.println("\nЗапрашиваем задачу 2");
         taskManager.getTaskById(task2.getId());
         printHistory(taskManager);
-        
         System.out.println("\nЗапрашиваем эпик 2");
         taskManager.getEpicById(epic2.getId());
         printHistory(taskManager);
-        
         System.out.println("\nЗапрашиваем подзадачу 1.2");
         taskManager.getSubtaskById(subtask2.getId());
         printHistory(taskManager);
-        
         System.out.println("\nЗапрашиваем подзадачу 1.3");
         taskManager.getSubtaskById(subtask3.getId());
         printHistory(taskManager);
         
         // 3. Повторно запрашиваем некоторые задачи и проверяем, что в истории нет повторов
         System.out.println("\n3. Повторно запрашиваем задачи и проверяем, что в истории нет повторов");
-        
         System.out.println("\nПовторно запрашиваем задачу 1");
         taskManager.getTaskById(task1.getId());
         printHistory(taskManager);
-        
         System.out.println("\nПовторно запрашиваем эпик 1");
         taskManager.getEpicById(epic1.getId());
         printHistory(taskManager);
-        
         System.out.println("\nПовторно запрашиваем подзадачу 1.1");
         taskManager.getSubtaskById(subtask1.getId());
         printHistory(taskManager);
