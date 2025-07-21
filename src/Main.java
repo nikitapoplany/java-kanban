@@ -1,7 +1,6 @@
 import model.Epic;
 import model.Subtask;
 import model.Task;
-import model.TaskStatus;
 import taskmanager.*;
 
 /**
@@ -64,7 +63,6 @@ public class Main {
         System.out.println("\nЗапрашиваем подзадачу 1.3");
         taskManager.getSubtaskById(subtask3.getId());
         printHistory(taskManager);
-        
         // 3. Повторно запрашиваем некоторые задачи и проверяем, что в истории нет повторов
         System.out.println("\n3. Повторно запрашиваем задачи и проверяем, что в истории нет повторов");
         System.out.println("\nПовторно запрашиваем задачу 1");
@@ -76,20 +74,17 @@ public class Main {
         System.out.println("\nПовторно запрашиваем подзадачу 1.1");
         taskManager.getSubtaskById(subtask1.getId());
         printHistory(taskManager);
-        
         // 4. Удаляем задачу из истории и проверяем, что она не выводится
         System.out.println("\n4. Удаляем задачу 2 и проверяем, что она удалена из истории");
         taskManager.deleteTaskById(task2.getId());
         System.out.println("Задача 2 удалена");
         printHistory(taskManager);
-        
         // 5. Удаляем эпик с подзадачами и проверяем, что из истории удалились и эпик, и его подзадачи
         System.out.println("\n5. Удаляем эпик 1 с подзадачами и проверяем, что они удалены из истории");
         taskManager.deleteEpicById(epic1.getId());
         System.out.println("Эпик 1 и его подзадачи удалены");
         printHistory(taskManager);
     }
-    
     /**
      * Вспомогательный метод для вывода истории просмотров
      */
