@@ -12,6 +12,7 @@ import java.util.List;
 public interface TaskManager {
     // Методы для работы с задачами
     List<Task> getAllTasks();
+
     Task getTaskById(int id);
 
     void createTask(Task task);
@@ -37,6 +38,7 @@ public interface TaskManager {
 
     // Методы для работы с подзадачами
     List<Subtask> getAllSubtasks();
+
     Subtask getSubtaskById(int id);
 
     void createSubtask(Subtask subtask);
