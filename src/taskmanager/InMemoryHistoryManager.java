@@ -119,10 +119,8 @@ public class InMemoryHistoryManager implements HistoryManager {
         if (task == null) {
             return;
         }
-        
         // Удаляем предыдущий просмотр этой задачи, если он был
         remove(task.getId());
-        
         // Добавляем задачу в конец списка и сохраняем узел в HashMap
         Node node = linkedList.linkLast(task);
         nodeMap.put(task.getId(), node);
