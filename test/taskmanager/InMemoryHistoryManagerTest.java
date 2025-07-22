@@ -14,19 +14,16 @@ class InMemoryHistoryManagerTest {
     private static final String TASK_1_DESCRIPTION = "Task 1 Description";
     private static final String TASK_2_NAME = "Task 2";
     private static final String TASK_2_DESCRIPTION = "Task 2 Description";
-    private static final String TASK_11_NAME = "Task 11";
-    private static final String TASK_11_DESCRIPTION = "Task 11 Description";
-    private static final String TASK_0_NAME = "Task 0";
-    private static final String TASK_0_DESCRIPTION = "Task 0 Description";
+    private static final String TASK_3_NAME = "Task 3";
+    private static final String TASK_3_DESCRIPTION = "Task 3 Description";
     private static final int TASK_ID_1 = 1;
     private static final int TASK_ID_2 = 2;
-    private static final int TASK_ID_11 = 11;
-    private static final int TASK_ID_0 = 0;
-    private static final int MAX_HISTORY_SIZE = 10;
+    private static final int TASK_ID_3 = 3;
 
     private HistoryManager historyManager;
     private Task task1;
     private Task task2;
+    private Task task3;
 
     @BeforeEach
     void setUp() {
@@ -35,6 +32,8 @@ class InMemoryHistoryManagerTest {
         task1.setId(TASK_ID_1);
         task2 = new Task(TASK_2_NAME, TASK_2_DESCRIPTION);
         task2.setId(TASK_ID_2);
+        task3 = new Task(TASK_3_NAME, TASK_3_DESCRIPTION);
+        task3.setId(TASK_ID_3);
     }
 
     @Test
@@ -59,8 +58,8 @@ class InMemoryHistoryManagerTest {
     }
 
     @Test
-    @DisplayName("История должна быть ограничена 10 элементами")
-    void add_MoreThanMaxItems_ShouldLimitHistorySize() {
+    @DisplayName("История не должна иметь ограничений по размеру")
+    void add_ManyItems_ShouldNotLimitHistorySize() {
         for (int i = 0; i < 15; i++) {
             Task task = new Task("Task " + i, "Task " + i + " Description");
             task.setId(i);
@@ -69,28 +68,100 @@ class InMemoryHistoryManagerTest {
         List<Task> history = historyManager.getHistory();
 
         assertNotNull(history, "История не должна быть null");
-        assertTrue(history.size() <= MAX_HISTORY_SIZE, "История должна быть ограничена 10 элементами");
+        assertEquals(15, history.size(), "История не должна иметь ограничений по размеру");
     }
 
     @Test
-    @DisplayName("Самый старый элемент должен быть удален, когда история заполнена")
-    void add_WhenHistoryIsFull_ShouldRemoveOldestItem() {
-        for (int i = 0; i < MAX_HISTORY_SIZE; i++) {
-            Task task = new Task("Task " + i, "Task " + i + " Description");
-            task.setId(i);
-            historyManager.add(task);
-        }
-        Task task11 = new Task(TASK_11_NAME, TASK_11_DESCRIPTION);
-        task11.setId(TASK_ID_11);
-
-        historyManager.add(task11);
+    @DisplayName("При повторном просмотре задачи в истории должен остаться только последний просмотр")
+    void add_SameTaskMultipleTimes_ShouldKeepOnlyLastView() {
+        historyManager.add(task1);
+        historyManager.add(task2);
+        historyManager.add(task1); // Повторный просмотр task1
         List<Task> history = historyManager.getHistory();
 
-        Task task0 = new Task(TASK_0_NAME, TASK_0_DESCRIPTION);
-        task0.setId(TASK_ID_0);
+        assertNotNull(history, "История не должна быть null");
+        assertEquals(2, history.size(), "В истории должно быть 2 задачи");
+        assertEquals(task2, history.get(0), "Первой задачей должна быть task2");
+        assertEquals(task1, history.get(1), "Второй задачей должна быть task1 (последний просмотр)");
+    }
+
+    @Test
+    @DisplayName("Метод remove должен удалять задачу из истории")
+    void remove_ExistingTask_ShouldRemoveFromHistory() {
+        historyManager.add(task1);
+        historyManager.add(task2);
+        historyManager.add(task3);
+        
+        historyManager.remove(TASK_ID_2); // Удаляем task2
+        List<Task> history = historyManager.getHistory();
 
         assertNotNull(history, "История не должна быть null");
-        assertFalse(history.contains(task0), "Самый старый элемент должен быть удален");
-        assertTrue(history.contains(task11), "Новейшая задача должна быть в истории");
+        assertEquals(2, history.size(), "В истории должно остаться 2 задачи");
+        assertTrue(history.contains(task1), "task1 должна остаться в истории");
+        assertFalse(history.contains(task2), "task2 должна быть удалена из истории");
+        assertTrue(history.contains(task3), "task3 должна остаться в истории");
+    }
+
+    @Test
+    @DisplayName("Метод remove не должен ничего делать, если задачи нет в истории")
+    void remove_NonExistingTask_ShouldDoNothing() {
+        historyManager.add(task1);
+        historyManager.add(task3);
+        
+        historyManager.remove(TASK_ID_2); // Удаляем несуществующую в истории task2
+        List<Task> history = historyManager.getHistory();
+
+        assertNotNull(history, "История не должна быть null");
+        assertEquals(2, history.size(), "В истории должно остаться 2 задачи");
+        assertTrue(history.contains(task1), "task1 должна остаться в истории");
+        assertTrue(history.contains(task3), "task3 должна остаться в истории");
+    }
+
+    @Test
+    @DisplayName("Порядок задач в истории должен сохраняться после удаления")
+    void remove_MiddleTask_ShouldPreserveOrder() {
+        historyManager.add(task1);
+        historyManager.add(task2);
+        historyManager.add(task3);
+        
+        historyManager.remove(TASK_ID_2); // Удаляем task2 из середины
+        List<Task> history = historyManager.getHistory();
+
+        assertNotNull(history, "История не должна быть null");
+        assertEquals(2, history.size(), "В истории должно остаться 2 задачи");
+        assertEquals(task1, history.get(0), "Первой задачей должна быть task1");
+        assertEquals(task3, history.get(1), "Второй задачей должна быть task3");
+    }
+
+    @Test
+    @DisplayName("Удаление первой задачи из истории")
+    void remove_FirstTask_ShouldUpdateHead() {
+        historyManager.add(task1);
+        historyManager.add(task2);
+        historyManager.add(task3);
+        
+        historyManager.remove(TASK_ID_1); // Удаляем первую задачу
+        List<Task> history = historyManager.getHistory();
+
+        assertNotNull(history, "История не должна быть null");
+        assertEquals(2, history.size(), "В истории должно остаться 2 задачи");
+        assertEquals(task2, history.get(0), "Первой задачей должна быть task2");
+        assertEquals(task3, history.get(1), "Второй задачей должна быть task3");
+    }
+
+    @Test
+    @DisplayName("Удаление последней задачи из истории")
+    void remove_LastTask_ShouldUpdateTail() {
+        historyManager.add(task1);
+        historyManager.add(task2);
+        historyManager.add(task3);
+        
+        historyManager.remove(TASK_ID_3); // Удаляем последнюю задачу
+        List<Task> history = historyManager.getHistory();
+
+        assertNotNull(history, "История не должна быть null");
+        assertEquals(2, history.size(), "В истории должно остаться 2 задачи");
+        assertEquals(task1, history.get(0), "Первой задачей должна быть task1");
+        assertEquals(task2, history.get(1), "Второй задачей должна быть task2");
     }
 }
