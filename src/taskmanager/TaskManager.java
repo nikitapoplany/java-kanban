@@ -1,8 +1,8 @@
 package taskmanager;
 
-import model.Epic;
-import model.Subtask;
-import model.Task;
+import taskmanager.model.Epic;
+import taskmanager.model.Subtask;
+import taskmanager.model.Task;
 
 import java.util.List;
 

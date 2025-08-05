@@ -1,7 +1,7 @@
 package taskmanager;
 
-import model.Task;
-import model.TaskStatus;
+import taskmanager.model.Task;
+import taskmanager.model.TaskStatus;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

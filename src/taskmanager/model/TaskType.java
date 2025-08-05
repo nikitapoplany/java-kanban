@@ -1,4 +1,4 @@
-package model;
+package taskmanager.model;
 
 /**
  * Перечисление типов задач для сериализации

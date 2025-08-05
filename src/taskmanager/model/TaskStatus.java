@@ -1,4 +1,4 @@
-package model;
+package taskmanager.model;
 
 public enum TaskStatus {
     NEW,

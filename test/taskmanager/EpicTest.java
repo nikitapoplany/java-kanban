@@ -1,8 +1,8 @@
 package taskmanager;
 
-import model.Epic;
-import model.Subtask;
-import model.TaskStatus;
+import taskmanager.model.Epic;
+import taskmanager.model.Subtask;
+import taskmanager.model.TaskStatus;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

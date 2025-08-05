@@ -1,4 +1,4 @@
-package exceptions;
+package taskmanager.exceptions;
 
 /**
  * Исключение, выбрасываемое при ошибках сохранения/загрузки менеджера задач

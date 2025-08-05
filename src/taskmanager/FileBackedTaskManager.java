@@ -1,11 +1,11 @@
 package taskmanager;
 
-import exceptions.ManagerSaveException;
-import model.Epic;
-import model.Subtask;
-import model.Task;
-import model.TaskStatus;
-import model.TaskType;
+import taskmanager.exceptions.ManagerSaveException;
+import taskmanager.model.Epic;
+import taskmanager.model.Subtask;
+import taskmanager.model.Task;
+import taskmanager.model.TaskStatus;
+import taskmanager.model.TaskType;
 
 import java.io.File;
 import java.io.IOException;
