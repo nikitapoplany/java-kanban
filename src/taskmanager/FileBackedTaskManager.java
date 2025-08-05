@@ -136,24 +136,39 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
         TaskStatus status = TaskStatus.valueOf(parts[3]);
         String description = parts[4];
 
-        Task task;
-
+        // Switch используется только для выбора типа задачи, а создание делегируется специализированным методам
         switch (type) {
             case TASK:
-                task = new Task(name, description, id, status);
-                break;
+                return createTaskFromParts(name, description, id, status);
             case EPIC:
-                task = new Epic(name, description, id, status);
-                break;
+                return createEpicFromParts(name, description, id, status);
             case SUBTASK:
                 int epicId = Integer.parseInt(parts[5]);
-                task = new Subtask(name, description, id, status, epicId);
-                break;
+                return createSubtaskFromParts(name, description, id, status, epicId);
             default:
                 throw new IllegalArgumentException("Неизвестный тип задачи: " + type);
         }
+    }
 
-        return task;
+    /**
+     * Создать обычную задачу из компонентов
+     */
+    private Task createTaskFromParts(String name, String description, int id, TaskStatus status) {
+        return new Task(name, description, id, status);
+    }
+
+    /**
+     * Создать эпик из компонентов
+     */
+    private Epic createEpicFromParts(String name, String description, int id, TaskStatus status) {
+        return new Epic(name, description, id, status);
+    }
+
+    /**
+     * Создать подзадачу из компонентов
+     */
+    private Subtask createSubtaskFromParts(String name, String description, int id, TaskStatus status, int epicId) {
+        return new Subtask(name, description, id, status, epicId);
     }
 
     /**
