@@ -401,7 +401,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
         final Map<Integer, Subtask> subtasksMap;
         final int lineIndex;
 
-        TaskParsingResult(Map<Integer, Task> tasksMap, Map<Integer, Epic> epicsMap, 
+        TaskParsingResult(Map<Integer, Task> tasksMap, Map<Integer, Epic> epicsMap,
                          Map<Integer, Subtask> subtasksMap, int lineIndex) {
             this.tasksMap = tasksMap;
             this.epicsMap = epicsMap;
@@ -453,9 +453,9 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
 
             // Добавляем задачи в менеджер
             IdMappingResult idMappingResult = addTasksToManager(
-                    loadedManager, 
-                    parsingResult.tasksMap, 
-                    parsingResult.epicsMap, 
+                    loadedManager,
+                    parsingResult.tasksMap,
+                    parsingResult.epicsMap,
                     parsingResult.subtasksMap);
 
             // Восстанавливаем историю просмотров
