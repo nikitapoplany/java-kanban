@@ -152,6 +152,7 @@ public class Main {
     /**
      * Вспомогательный метод для вывода состояния менеджера
      */
+
     private static void printManagerState(TaskManager manager) {
         System.out.println("Задачи:");
         for (Task task : manager.getAllTasks()) {
