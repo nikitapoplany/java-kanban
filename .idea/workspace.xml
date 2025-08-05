@@ -5,29 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="207edbf2-3d6e-40d2-a9b1-d98760be34cc" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/exceptions/ManagerSaveException.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/model/Epic.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/model/Subtask.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/model/Task.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/taskmanager/model/Task.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/model/TaskStatus.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/model/TaskType.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/taskmanager/FileBackedTaskManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/taskmanager/FileBackedTaskManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/taskmanager/HistoryManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/taskmanager/HistoryManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/taskmanager/InMemoryHistoryManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/taskmanager/InMemoryHistoryManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/taskmanager/InMemoryTaskManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/taskmanager/InMemoryTaskManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/taskmanager/TaskManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/taskmanager/TaskManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/taskmanager/exceptions/ManagerSaveException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/taskmanager/exceptions/ManagerSaveException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/taskmanager/model/Epic.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/taskmanager/model/Epic.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/taskmanager/model/Subtask.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/taskmanager/model/Subtask.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/taskmanager/model/TaskStatus.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/taskmanager/model/TaskStatus.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/taskmanager/model/TaskType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/taskmanager/model/TaskType.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/taskmanager/EpicTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/test/taskmanager/EpicTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/test/taskmanager/FileBackedTaskManagerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/test/taskmanager/FileBackedTaskManagerTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/taskmanager/InMemoryHistoryManagerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/test/taskmanager/InMemoryHistoryManagerTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/taskmanager/InMemoryTaskManagerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/test/taskmanager/InMemoryTaskManagerTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/taskmanager/ManagersTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/test/taskmanager/ManagersTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/taskmanager/TaskTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/test/taskmanager/TaskTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -46,31 +26,45 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
-    &quot;Downloaded.Files.Path.Enabled&quot;: &quot;false&quot;,
-    &quot;Repository.Attach.Annotations&quot;: &quot;false&quot;,
-    &quot;Repository.Attach.JavaDocs&quot;: &quot;false&quot;,
-    &quot;Repository.Attach.Sources&quot;: &quot;false&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;sprint__7-solution-in-file-manager&quot;,
-    &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.Main.executor": "Run",
+    "Downloaded.Files.Path.Enabled": "false",
+    "JUnit.EpicTest.executor": "Run",
+    "JUnit.FileBackedTaskManagerTest.executor": "Run",
+    "JUnit.InMemoryHistoryManagerTest.executor": "Run",
+    "JUnit.InMemoryTaskManagerTest.executor": "Run",
+    "JUnit.ManagersTest.executor": "Run",
+    "JUnit.TaskTest.executor": "Run",
+    "Repository.Attach.Annotations": "false",
+    "Repository.Attach.JavaDocs": "false",
+    "Repository.Attach.Sources": "false",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "sprint__7-solution-in-file-manager",
+    "junie.onboarding.icon.badge.shown": "true",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="taskmanager.exceptions" />
       <recent name="taskmanager.model" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.TaskTest">
+  <component name="RunManager" selected="Application.Main">
+    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Main" />
+      <module name="java-kanban" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="FileBackedTaskManagerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="java-kanban" />
       <extension name="coverage">
@@ -81,21 +75,6 @@
       </extension>
       <option name="PACKAGE_NAME" value="taskmanager" />
       <option name="MAIN_CLASS_NAME" value="taskmanager.FileBackedTaskManagerTest" />
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="InMemoryHistoryManagerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="java-kanban" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="taskmanager.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="taskmanager" />
-      <option name="MAIN_CLASS_NAME" value="taskmanager.InMemoryHistoryManagerTest" />
       <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -159,11 +138,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.Main" />
+        <item itemvalue="JUnit.FileBackedTaskManagerTest" />
         <item itemvalue="JUnit.TaskTest" />
         <item itemvalue="JUnit.ManagersTest" />
         <item itemvalue="JUnit.InMemoryTaskManagerTest" />
-        <item itemvalue="JUnit.InMemoryHistoryManagerTest" />
-        <item itemvalue="JUnit.FileBackedTaskManagerTest" />
       </list>
     </recent_temporary>
   </component>
