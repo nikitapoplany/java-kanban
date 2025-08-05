@@ -142,13 +142,13 @@ public class Main {
     /**
      * Вспомогательный метод для вывода истории просмотров
      */
+
     private static void printHistory(TaskManager taskManager) {
         System.out.println("История просмотров:");
         for (Task task : taskManager.getHistory()) {
             System.out.println("- " + task.getId() + ": " + task.getName() + " (" + task.getClass().getSimpleName() + ")");
         }
     }
-    
     /**
      * Вспомогательный метод для вывода состояния менеджера
      */
@@ -157,19 +157,16 @@ public class Main {
         for (Task task : manager.getAllTasks()) {
             System.out.println("- " + task.getId() + ": " + task.getName() + " (" + task.getStatus() + ")");
         }
-        
         System.out.println("Эпики:");
         for (Epic epic : manager.getAllEpics()) {
             System.out.println("- " + epic.getId() + ": " + epic.getName() + " (" + epic.getStatus() + ")");
             System.out.println("  Подзадачи: " + epic.getSubtaskIds());
         }
-        
         System.out.println("Подзадачи:");
         for (Subtask subtask : manager.getAllSubtasks()) {
             System.out.println("- " + subtask.getId() + ": " + subtask.getName() + " (" + subtask.getStatus() + ")");
             System.out.println("  Эпик: " + subtask.getEpicId());
         }
-        
         System.out.println("История просмотров:");
         for (Task task : manager.getHistory()) {
             System.out.println("- " + task.getId() + ": " + task.getName() + " (" + task.getClass().getSimpleName() + ")");
