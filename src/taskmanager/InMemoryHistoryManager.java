@@ -1,6 +1,6 @@
 package taskmanager;
 
-import model.Task;
+import taskmanager.model.Task;
 
 import java.util.ArrayList;
 import java.util.HashMap;

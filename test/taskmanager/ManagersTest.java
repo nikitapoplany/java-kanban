@@ -1,6 +1,6 @@
 package taskmanager;
 
-import model.Task;
+import taskmanager.model.Task;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

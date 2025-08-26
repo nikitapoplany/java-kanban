@@ -1,4 +1,5 @@
-package model;
+package taskmanager.model;
+
 
 /**
  * Класс, представляющий Подзадачу, которая является частью Эпика
