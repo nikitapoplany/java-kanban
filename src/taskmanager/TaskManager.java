@@ -58,5 +58,6 @@ public interface TaskManager {
      * Задачи без времени начала не включаются в список
      * @return отсортированный список задач и подзадач
      */
+
     List<Task> getPrioritizedTasks();
 }
