@@ -38,7 +38,6 @@ public class Epic extends Task {
         super(name, description, id, status);
         this.subtaskIds = new ArrayList<>();
     }
-    
     /**
      * Переопределение метода getEndTime для Эпика
      * @return время завершения эпика
@@ -47,7 +46,6 @@ public class Epic extends Task {
     public LocalDateTime getEndTime() {
         return endTime;
     }
-    
     /**
      * Установить время завершения эпика
      * @param endTime время завершения эпика
