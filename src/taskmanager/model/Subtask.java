@@ -1,5 +1,7 @@
 package taskmanager.model;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
 
 /**
  * Класс, представляющий Подзадачу, которая является частью Эпика
@@ -44,6 +46,22 @@ public class Subtask extends Task {
      */
     public Subtask(String name, String description, int id, TaskStatus status, int epicId) {
         super(name, description, id, status);
+        this.epicId = epicId;
+    }
+    
+    /**
+     * Конструктор для создания Подзадачи со всеми полями, включая продолжительность и время начала
+     *
+     * @param name        Название подзадачи
+     * @param description Описание подзадачи
+     * @param id          Уникальный идентификатор подзадачи
+     * @param status      Статус подзадачи
+     * @param epicId      Идентификатор эпика, к которому принадлежит эта подзадача
+     * @param duration    Продолжительность подзадачи
+     * @param startTime   Время начала подзадачи
+     */
+    public Subtask(String name, String description, int id, TaskStatus status, int epicId, Duration duration, LocalDateTime startTime) {
+        super(name, description, id, status, duration, startTime);
         this.epicId = epicId;
     }
 
