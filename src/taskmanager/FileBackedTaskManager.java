@@ -169,8 +169,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
     /**
      * Создать обычную задачу из компонентов
      */
-    private Task createTaskFromParts(String name, String description, int id, TaskStatus status, 
-                                    java.time.Duration duration, java.time.LocalDateTime startTime) {
+    private Task createTaskFromParts(String name, String description, int id, TaskStatus status, java.time.Duration duration, java.time.LocalDateTime startTime) {
         Task task = new Task(name, description, id, status);
         if (duration != null) {
             task.setDuration(duration);
@@ -317,15 +316,12 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
 
             // Создаем новый эпик с тем же именем и описанием
             Epic newEpic = new Epic(epic.getName(), epic.getDescription());
-            
             // Копируем время начала и продолжительность
             newEpic.setStartTime(epic.getStartTime());
             newEpic.setDuration(epic.getDuration());
             newEpic.setEndTime(epic.getEndTime());
-            
             loadedManager.createEpic(newEpic);
             int newId = newEpic.getId();
-
             // Запоминаем соответствие старого и нового ID
             oldToNewEpicIds.put(oldId, newId);
         }
@@ -343,11 +339,9 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
 
             // Создаем новую подзадачу с тем же именем и описанием, но с новым ID эпика
             Subtask newSubtask = new Subtask(subtask.getName(), subtask.getDescription(), subtask.getStatus(), newEpicId);
-            
             // Копируем время начала и продолжительность
             newSubtask.setStartTime(subtask.getStartTime());
             newSubtask.setDuration(subtask.getDuration());
-            
             loadedManager.createSubtask(newSubtask);
             int newId = newSubtask.getId();
 
@@ -361,11 +355,9 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
 
             // Создаем новую задачу с тем же именем, описанием и статусом
             Task newTask = new Task(task.getName(), task.getDescription(), task.getStatus());
-            
             // Копируем время начала и продолжительность
             newTask.setStartTime(task.getStartTime());
             newTask.setDuration(task.getDuration());
-            
             loadedManager.createTask(newTask);
             int newId = newTask.getId();
 
