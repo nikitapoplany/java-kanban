@@ -59,6 +59,7 @@ public class InMemoryTaskManager implements TaskManager {
      * Задачи без времени начала не включаются в список
      * @return отсортированный список задач и подзадач
      */
+
     @Override
     public List<Task> getPrioritizedTasks() {
         return new ArrayList<>(prioritizedTasks);
@@ -254,7 +255,6 @@ public class InMemoryTaskManager implements TaskManager {
         if (!epics.containsKey(epicId)) {
             return;
         }
-        
         // Проверяем, не пересекается ли подзадача с существующими задачами
         if (subtask.getStartTime() != null && hasOverlaps(subtask)) {
             throw new IllegalStateException("Подзадача пересекается по времени с уже существующими задачами");
@@ -280,10 +280,8 @@ public class InMemoryTaskManager implements TaskManager {
         int id = subtask.getId();
         if (subtasks.containsKey(id)) {
             Subtask oldSubtask = subtasks.get(id);
-            
             // Удаляем старую версию подзадачи из отсортированного набора
             prioritizedTasks.remove(oldSubtask);
-            
             // Проверяем, не пересекается ли обновленная подзадача с существующими задачами
             if (subtask.getStartTime() != null && hasOverlaps(subtask)) {
                 // Возвращаем старую версию подзадачи в отсортированный набор
@@ -292,7 +290,6 @@ public class InMemoryTaskManager implements TaskManager {
                 }
                 throw new IllegalStateException("Подзадача пересекается по времени с уже существующими задачами");
             }
-            
             int currentEpicId = oldSubtask.getEpicId();
 
             int newEpicId = subtask.getEpicId();
@@ -314,7 +311,6 @@ public class InMemoryTaskManager implements TaskManager {
             }
 
             subtasks.put(id, subtask);
-            
             // Добавляем обновленную подзадачу в отсортированный набор, если у нее есть время начала
             if (subtask.getStartTime() != null) {
                 prioritizedTasks.add(subtask);
@@ -329,10 +325,8 @@ public class InMemoryTaskManager implements TaskManager {
     public void deleteSubtaskById(int id) {
         if (subtasks.containsKey(id)) {
             Subtask subtask = subtasks.get(id);
-            
             // Удаляем подзадачу из отсортированного набора
             prioritizedTasks.remove(subtask);
-            
             int epicId = subtask.getEpicId();
             Epic epic = epics.get(epicId);
             epic.removeSubtaskId(id);
@@ -350,16 +344,13 @@ public class InMemoryTaskManager implements TaskManager {
         for (Integer id : subtasks.keySet()) {
             historyManager.remove(id);
         }
-        
         // Удаляем все подзадачи из отсортированного набора
         for (Subtask subtask : subtasks.values()) {
             prioritizedTasks.remove(subtask);
         }
-        
         for (Epic epic : epics.values()) {
             epic.clearSubtasks();
             epic.setStatus(TaskStatus.NEW);
-            
             // Сбрасываем время и продолжительность для эпиков
             epic.setStartTime(null);
             epic.setDuration(java.time.Duration.ZERO);
@@ -403,7 +394,6 @@ public class InMemoryTaskManager implements TaskManager {
                 .map(subtasks::get)
                 .map(Task::getStatus)
                 .allMatch(status -> status == TaskStatus.NEW);
-                
         boolean allDone = subtaskIds.stream()
                 .map(subtasks::get)
                 .map(Task::getStatus)
