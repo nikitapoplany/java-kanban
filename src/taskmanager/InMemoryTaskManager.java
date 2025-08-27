@@ -22,7 +22,6 @@ public class InMemoryTaskManager implements TaskManager {
     private final Map<Integer, Subtask> subtasks;
     private int nextId = 1;
     private final HistoryManager historyManager;
-    
     // Отсортированный набор задач и подзадач по времени начала
     private final Set<Task> prioritizedTasks;
 
@@ -34,7 +33,6 @@ public class InMemoryTaskManager implements TaskManager {
         epics = new HashMap<>();
         subtasks = new HashMap<>();
         historyManager = new InMemoryHistoryManager();
-        
         // Инициализация отсортированного набора задач
         prioritizedTasks = new TreeSet<>(Comparator.comparing(
                 task -> task.getStartTime(), // Сортировка по времени начала
@@ -50,14 +48,12 @@ public class InMemoryTaskManager implements TaskManager {
         epics = new HashMap<>();
         subtasks = new HashMap<>();
         this.historyManager = historyManager;
-        
         // Инициализация отсортированного набора задач
         prioritizedTasks = new TreeSet<>(Comparator.comparing(
                 task -> task.getStartTime(), // Сортировка по времени начала
                 Comparator.nullsLast(Comparator.naturalOrder()) // Задачи без времени начала в конце
         ));
     }
-    
     /**
      * Получить список задач и подзадач, отсортированных по времени начала
      * Задачи без времени начала не включаются в список
@@ -96,11 +92,9 @@ public class InMemoryTaskManager implements TaskManager {
         if (task.getStartTime() != null && hasOverlaps(task)) {
             throw new IllegalStateException("Задача пересекается по времени с уже существующими задачами");
         }
-        
         int id = generateId();
         task.setId(id);
         tasks.put(id, task);
-        
         // Добавляем задачу в отсортированный набор, если у нее есть время начала
         if (task.getStartTime() != null) {
             prioritizedTasks.add(task);
@@ -113,10 +107,8 @@ public class InMemoryTaskManager implements TaskManager {
         int id = task.getId();
         if (tasks.containsKey(id)) {
             Task oldTask = tasks.get(id);
-            
             // Удаляем старую версию задачи из отсортированного набора
             prioritizedTasks.remove(oldTask);
-            
             // Проверяем, не пересекается ли обновленная задача с существующими задачами
             if (task.getStartTime() != null && hasOverlaps(task)) {
                 // Возвращаем старую версию задачи в отсортированный набор
@@ -125,10 +117,8 @@ public class InMemoryTaskManager implements TaskManager {
                 }
                 throw new IllegalStateException("Задача пересекается по времени с уже существующими задачами");
             }
-            
             // Обновляем задачу
             tasks.put(id, task);
-            
             // Добавляем обновленную задачу в отсортированный набор, если у нее есть время начала
             if (task.getStartTime() != null) {
                 prioritizedTasks.add(task);
@@ -141,10 +131,8 @@ public class InMemoryTaskManager implements TaskManager {
     public void deleteTaskById(int id) {
         if (tasks.containsKey(id)) {
             Task task = tasks.get(id);
-            
             // Удаляем задачу из отсортированного набора
             prioritizedTasks.remove(task);
-            
             tasks.remove(id);
             historyManager.remove(id);
         }
@@ -157,12 +145,10 @@ public class InMemoryTaskManager implements TaskManager {
         for (Integer id : tasks.keySet()) {
             historyManager.remove(id);
         }
-        
         // Удаляем все задачи из отсортированного набора
         for (Task task : tasks.values()) {
             prioritizedTasks.remove(task);
         }
-        
         tasks.clear();
     }
 
