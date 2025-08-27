@@ -87,7 +87,7 @@
       <recent name="taskmanager.model" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.Main">
+  <component name="RunManager" selected="JUnit.taskmanager in java-kanban">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Main" />
       <module name="java-kanban" />
@@ -133,7 +133,7 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="InMemoryTaskManagerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="taskmanager in java-kanban" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="java-kanban" />
       <extension name="coverage">
         <pattern>
@@ -142,19 +142,18 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="taskmanager" />
-      <option name="MAIN_CLASS_NAME" value="taskmanager.InMemoryTaskManagerTest" />
-      <option name="TEST_OBJECT" value="class" />
+      <option name="TEST_OBJECT" value="package" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.taskmanager in java-kanban" />
         <item itemvalue="Application.Main" />
         <item itemvalue="JUnit.All in java-kanban" />
         <item itemvalue="JUnit.FileBackedTaskManagerSpecificTest" />
         <item itemvalue="JUnit.InMemoryTaskManagerSpecificTest" />
-        <item itemvalue="JUnit.InMemoryTaskManagerTest" />
       </list>
     </recent_temporary>
   </component>

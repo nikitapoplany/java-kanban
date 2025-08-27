@@ -113,14 +113,10 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
         } else {
             type = TaskType.TASK;
         }
-        
         // Преобразуем продолжительность в минуты
-        String durationMinutes = task.getDuration() != null ? 
-                String.valueOf(task.getDuration().toMinutes()) : "";
-        
+        String durationMinutes = task.getDuration() != null ? String.valueOf(task.getDuration().toMinutes()) : "";
         // Форматируем время начала
-        String startTimeStr = task.getStartTime() != null ? 
-                task.getStartTime().toString() : "";
+        String startTimeStr = task.getStartTime() != null ? task.getStartTime().toString() : "";
 
         return String.format("%d,%s,%s,%s,%s,%s,%s,%s",
                 task.getId(),
@@ -145,21 +141,17 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
         String name = parts[2];
         TaskStatus status = TaskStatus.valueOf(parts[3]);
         String description = parts[4];
-        
         // Парсим продолжительность и время начала, если они есть
         java.time.Duration duration = null;
         java.time.LocalDateTime startTime = null;
-        
         // Проверяем, есть ли поля продолжительности и времени начала
         if (parts.length > 6 && !parts[6].isEmpty()) {
             long minutes = Long.parseLong(parts[6]);
             duration = java.time.Duration.ofMinutes(minutes);
         }
-        
         if (parts.length > 7 && !parts[7].isEmpty()) {
             startTime = java.time.LocalDateTime.parse(parts[7]);
         }
-
         // Switch используется только для выбора типа задачи, а создание делегируется специализированным методам
         switch (type) {
             case TASK:
