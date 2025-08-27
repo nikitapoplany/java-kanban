@@ -48,7 +48,7 @@ public class Subtask extends Task {
         super(name, description, id, status);
         this.epicId = epicId;
     }
-    
+
     /**
      * Конструктор для создания Подзадачи со всеми полями, включая продолжительность и время начала
      *

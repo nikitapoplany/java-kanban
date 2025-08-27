@@ -59,7 +59,7 @@ public class Task {
         this.status = status;
         this.duration = Duration.ZERO;
     }
-    
+
     /**
      * Конструктор для создания задачи со всеми полями, включая продолжительность и время начала
      *
@@ -110,7 +110,7 @@ public class Task {
     public void setStatus(TaskStatus status) {
         this.status = status;
     }
-    
+
     /**
      * Получить продолжительность задачи
      * @return продолжительность задачи
@@ -118,7 +118,7 @@ public class Task {
     public Duration getDuration() {
         return duration;
     }
-    
+
     /**
      * Установить продолжительность задачи
      * @param duration продолжительность задачи
@@ -126,7 +126,7 @@ public class Task {
     public void setDuration(Duration duration) {
         this.duration = duration != null ? duration : Duration.ZERO;
     }
-    
+
     /**
      * Получить время начала задачи
      * @return время начала задачи
@@ -134,7 +134,7 @@ public class Task {
     public LocalDateTime getStartTime() {
         return startTime;
     }
-    
+
     /**
      * Установить время начала задачи
      * @param startTime время начала задачи
@@ -142,7 +142,7 @@ public class Task {
     public void setStartTime(LocalDateTime startTime) {
         this.startTime = startTime;
     }
-    
+
     /**
      * Получить время завершения задачи
      * @return время завершения задачи или null, если время начала не задано
@@ -182,3 +182,5 @@ public class Task {
                 '}';
     }
 }
+
+
