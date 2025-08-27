@@ -42,6 +42,7 @@ public class Epic extends Task {
      * Переопределение метода getEndTime для Эпика
      * @return время завершения эпика
      */
+
     @Override
     public LocalDateTime getEndTime() {
         return endTime;
@@ -50,6 +51,7 @@ public class Epic extends Task {
      * Установить время завершения эпика
      * @param endTime время завершения эпика
      */
+
     public void setEndTime(LocalDateTime endTime) {
         this.endTime = endTime;
     }
