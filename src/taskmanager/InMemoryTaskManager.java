@@ -406,11 +406,11 @@ public class InMemoryTaskManager implements TaskManager {
         } else {
             epic.setStatus(TaskStatus.IN_PROGRESS);
         }
-        
+
         // Обновляем время и продолжительность эпика
         updateEpicTimeFields(epicId);
     }
-    
+
     /**
      * Обновляет поля времени эпика на основе его подзадач
      * @param epicId идентификатор эпика
@@ -434,19 +434,19 @@ public class InMemoryTaskManager implements TaskManager {
         List<Subtask> epicSubtasks = subtaskIds.stream()
                 .map(subtasks::get)
                 .collect(java.util.stream.Collectors.toList());
-        
+
         // Находим самое раннее время начала среди подзадач с непустым временем начала
         java.util.Optional<java.time.LocalDateTime> earliestStart = epicSubtasks.stream()
                 .map(Task::getStartTime)
                 .filter(java.util.Objects::nonNull)
                 .min(java.time.LocalDateTime::compareTo);
-        
+
         // Находим самое позднее время окончания среди подзадач с непустым временем окончания
         java.util.Optional<java.time.LocalDateTime> latestEnd = epicSubtasks.stream()
                 .map(Task::getEndTime)
                 .filter(java.util.Objects::nonNull)
                 .max(java.time.LocalDateTime::compareTo);
-        
+
         // Суммируем продолжительности всех подзадач
         java.time.Duration totalDuration = epicSubtasks.stream()
                 .map(Task::getDuration)
@@ -463,7 +463,7 @@ public class InMemoryTaskManager implements TaskManager {
     public List<Task> getHistory() {
         return historyManager.getHistory();
     }
-    
+
     /**
      * Проверяет, пересекаются ли две задачи по времени выполнения
      * @param task1 первая задача
@@ -475,19 +475,19 @@ public class InMemoryTaskManager implements TaskManager {
         if (task1.getStartTime() == null || task2.getStartTime() == null) {
             return false;
         }
-        
+
         // Получаем время начала и окончания для обеих задач
         java.time.LocalDateTime start1 = task1.getStartTime();
         java.time.LocalDateTime end1 = task1.getEndTime();
         java.time.LocalDateTime start2 = task2.getStartTime();
         java.time.LocalDateTime end2 = task2.getEndTime();
-        
+
         // Проверяем пересечение с помощью метода наложения отрезков
         // Задачи пересекаются, если начало одной задачи находится между началом и концом другой задачи
         // или если конец одной задачи находится между началом и концом другой задачи
         return (start1.isBefore(end2) && start2.isBefore(end1));
     }
-    
+
     /**
      * Проверяет, пересекается ли задача с любой другой задачей в списке менеджера
      * @param task задача для проверки
@@ -498,7 +498,7 @@ public class InMemoryTaskManager implements TaskManager {
         if (task.getStartTime() == null) {
             return false;
         }
-        
+
         // Используем Stream API для проверки пересечений
         return getPrioritizedTasks().stream()
                 .filter(t -> t.getId() != task.getId()) // Исключаем саму задачу из проверки
