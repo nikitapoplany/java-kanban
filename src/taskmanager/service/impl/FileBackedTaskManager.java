@@ -318,10 +318,10 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
             newEpic.setStartTime(epic.getStartTime());
             newEpic.setDuration(epic.getDuration());
             newEpic.setEndTime(epic.getEndTime());
-            
+
             // Добавляем эпик в менеджер, сохраняя оригинальный ID
             loadedManager.addEpicWithId(newEpic);
-            
+
             // Запоминаем соответствие ID (в данном случае они совпадают)
             oldToNewEpicIds.put(id, id);
         }
@@ -343,10 +343,10 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
             // Копируем время начала и продолжительность
             newSubtask.setStartTime(subtask.getStartTime());
             newSubtask.setDuration(subtask.getDuration());
-            
+
             // Добавляем подзадачу в менеджер, сохраняя оригинальный ID
             loadedManager.addSubtaskWithId(newSubtask);
-            
+
             // Запоминаем соответствие ID (в данном случае они совпадают)
             oldToNewSubtaskIds.put(id, id);
         }
@@ -362,10 +362,10 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
             // Копируем время начала и продолжительность
             newTask.setStartTime(task.getStartTime());
             newTask.setDuration(task.getDuration());
-            
+
             // Добавляем задачу в менеджер, сохраняя оригинальный ID
             loadedManager.addTaskWithId(newTask);
-            
+
             // Запоминаем соответствие ID (в данном случае они совпадают)
             oldToNewTaskIds.put(id, id);
         }
