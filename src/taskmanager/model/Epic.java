@@ -1,16 +1,19 @@
 package taskmanager.model;
 
-
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Класс, представляющий Эпик-задачу, которая может содержать несколько подзадач
  * Статус Эпика определяется статусом его подзадач
+ * Продолжительность, время начала и завершения Эпика определяются его подзадачами
  */
 public class Epic extends Task {
     // Список идентификаторов подзадач, принадлежащих этому эпику
     private final List<Integer> subtaskIds;
+    // Время завершения эпика (рассчитывается на основе подзадач)
+    private LocalDateTime endTime;
 
     /**
      * Конструктор для создания нового Эпика
@@ -34,6 +37,23 @@ public class Epic extends Task {
     public Epic(String name, String description, int id, TaskStatus status) {
         super(name, description, id, status);
         this.subtaskIds = new ArrayList<>();
+    }
+    /**
+     * Переопределение метода getEndTime для Эпика
+     * @return время завершения эпика
+     */
+
+    @Override
+    public LocalDateTime getEndTime() {
+        return endTime;
+    }
+    /**
+     * Установить время завершения эпика
+     * @param endTime время завершения эпика
+     */
+
+    public void setEndTime(LocalDateTime endTime) {
+        this.endTime = endTime;
     }
 
     // Получить список идентификаторов подзадач для этого эпика

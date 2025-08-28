@@ -1,40 +1,48 @@
 package taskmanager;
 
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import taskmanager.model.Epic;
 import taskmanager.model.Subtask;
 import taskmanager.model.Task;
 import taskmanager.model.TaskStatus;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import taskmanager.service.impl.InMemoryTaskManager;
 
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class InMemoryTaskManagerTest {
-    private static final String TASK_NAME = "Test Task";
-    private static final String TASK_DESCRIPTION = "Test Task Description";
-    private static final String EPIC_NAME = "Test Epic";
-    private static final String EPIC_DESCRIPTION = "Test Epic Description";
-    private static final String SUBTASK_NAME = "Test Subtask";
-    private static final String SUBTASK_DESCRIPTION = "Test Subtask Description";
-    private static final String UPDATED_EPIC_NAME = "Updated Epic";
+/**
+ * Тесты для InMemoryTaskManager
+ */
+class InMemoryTaskManagerTest extends TaskManagerTest<InMemoryTaskManager> {
     private static final int MAX_HISTORY_SIZE = 10;
-
-    private TaskManager taskManager;
-    private Task task;
-    private Epic epic;
-    private Subtask subtask;
-
+    private static final String UPDATED_EPIC_NAME = "Updated Epic";
+    
+    protected Task task;
+    protected Epic epic;
+    protected Subtask subtask;
+    
+    @Override
     @BeforeEach
-    void setUp() {
-
-        taskManager = Managers.getDefault();
-        task = new Task(TASK_NAME, TASK_DESCRIPTION);
-        epic = new Epic(EPIC_NAME, EPIC_DESCRIPTION);
+    public void setUp() {
+        super.setUp();
+        
+        // Инициализация тестовых объектов
+        task = new Task("Test Task", "Test Description");
+        epic = new Epic("Test Epic", "Test Description");
         taskManager.createEpic(epic);
-        subtask = new Subtask(SUBTASK_NAME, SUBTASK_DESCRIPTION, epic.getId());
+        subtask = new Subtask("Test Subtask", "Test Description", epic.getId());
+    }
+
+    /**
+     * Создает экземпляр InMemoryTaskManager для тестирования
+     * @return экземпляр InMemoryTaskManager
+     */
+    @Override
+    protected InMemoryTaskManager createTaskManager() {
+        return new InMemoryTaskManager();
     }
 
     @Test
@@ -153,5 +161,30 @@ class InMemoryTaskManagerTest {
 
         assertNotNull(history, "История не должна быть null");
         assertTrue(history.size() <= MAX_HISTORY_SIZE, "История не должна содержать более 10 элементов");
+    }
+    
+    /**
+     * Тест на проверку отсутствия дубликатов в истории
+     * Этот тест специфичен для InMemoryTaskManager, так как использует внутреннюю реализацию
+     */
+    @Test
+    @DisplayName("История не должна содержать дубликатов")
+    void getHistory_WhenSameTaskViewedMultipleTimes_ShouldContainTaskOnlyOnce() {
+        Task testTask = new Task("Test Task", "Test Description");
+        taskManager.createTask(testTask);
+        
+        // Просматриваем задачу несколько раз
+        for (int i = 0; i < 5; i++) {
+            taskManager.getTaskById(testTask.getId());
+        }
+        
+        List<Task> history = taskManager.getHistory();
+        
+        // Проверяем, что задача встречается в истории только один раз
+        long count = history.stream()
+                .filter(t -> t.getId() == testTask.getId())
+                .count();
+        
+        assertEquals(1, count, "Задача должна встречаться в истории только один раз");
     }
 }

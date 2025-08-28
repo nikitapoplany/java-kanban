@@ -1,4 +1,4 @@
-package taskmanager;
+package taskmanager.service.impl;
 
 import taskmanager.exceptions.ManagerSaveException;
 import taskmanager.model.Epic;
@@ -6,6 +6,7 @@ import taskmanager.model.Subtask;
 import taskmanager.model.Task;
 import taskmanager.model.TaskStatus;
 import taskmanager.model.TaskType;
+import taskmanager.service.HistoryManager;
 
 import java.io.File;
 import java.io.IOException;
@@ -48,7 +49,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
             StringBuilder sb = new StringBuilder();
 
             // Добавляем заголовок
-            sb.append("id,type,name,status,description,epic\n");
+            sb.append("id,type,name,status,description,epic,duration,startTime\n");
 
             // Сохраняем задачи
             List<Task> tasks = getAllTasks();
@@ -114,19 +115,25 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
             type = TaskType.TASK;
         }
 
-        return String.format("%d,%s,%s,%s,%s,%s",
+        // Форматируем продолжительность и время начала
+        String durationStr = task.getDuration() != null ? String.valueOf(task.getDuration().toMinutes()) : "";
+        String startTimeStr = task.getStartTime() != null ? task.getStartTime().toString() : "";
+
+        return String.format("%d,%s,%s,%s,%s,%s,%s,%s",
                 task.getId(),
                 type,
                 task.getName(),
                 task.getStatus(),
                 task.getDescription(),
-                epicId);
+                epicId,
+                durationStr,
+                startTimeStr);
     }
 
     /**
-     * Создать задачу из строки
-     * @param value строка, представляющая задачу
-     * @return созданная задача
+     * Преобразовать строку из файла в задачу
+     * @param value строка из файла
+     * @return задача, созданная из строки
      */
     private Task fromString(String value) {
         String[] parts = value.split(",");
@@ -136,69 +143,95 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
         TaskStatus status = TaskStatus.valueOf(parts[3]);
         String description = parts[4];
 
-        // Switch используется только для выбора типа задачи, а создание делегируется специализированным методам
+        // Парсим продолжительность и время начала
+        java.time.Duration duration = null;
+        java.time.LocalDateTime startTime = null;
+
+        if (parts.length > 6 && !parts[6].isEmpty()) {
+            duration = java.time.Duration.ofMinutes(Long.parseLong(parts[6]));
+        }
+
+        if (parts.length > 7 && !parts[7].isEmpty()) {
+            startTime = java.time.LocalDateTime.parse(parts[7]);
+        }
+
         switch (type) {
             case TASK:
-                return createTaskFromParts(name, description, id, status);
+                return createTaskFromParts(name, description, id, status, duration, startTime);
             case EPIC:
-                return createEpicFromParts(name, description, id, status);
+                return createEpicFromParts(name, description, id, status, duration, startTime);
             case SUBTASK:
                 int epicId = Integer.parseInt(parts[5]);
-                return createSubtaskFromParts(name, description, id, status, epicId);
+                return createSubtaskFromParts(name, description, id, status, epicId, duration, startTime);
             default:
                 throw new IllegalArgumentException("Неизвестный тип задачи: " + type);
         }
     }
 
     /**
-     * Создать обычную задачу из компонентов
+     * Создать задачу из частей
      */
-    private Task createTaskFromParts(String name, String description, int id, TaskStatus status) {
-        return new Task(name, description, id, status);
+    private Task createTaskFromParts(String name, String description, int id, TaskStatus status,
+                                    java.time.Duration duration, java.time.LocalDateTime startTime) {
+        Task task = new Task(name, description, id, status);
+        task.setDuration(duration);
+        if (startTime != null) {
+            task.setStartTime(startTime);
+        }
+        return task;
     }
 
     /**
-     * Создать эпик из компонентов
+     * Создать эпик из частей
      */
-    private Epic createEpicFromParts(String name, String description, int id, TaskStatus status) {
-        return new Epic(name, description, id, status);
+    private Epic createEpicFromParts(String name, String description, int id, TaskStatus status,
+                                    java.time.Duration duration, java.time.LocalDateTime startTime) {
+        Epic epic = new Epic(name, description, id, status);
+        epic.setDuration(duration);
+        if (startTime != null) {
+            epic.setStartTime(startTime);
+        }
+        return epic;
     }
 
     /**
-     * Создать подзадачу из компонентов
+     * Создать подзадачу из частей
      */
-    private Subtask createSubtaskFromParts(String name, String description, int id, TaskStatus status, int epicId) {
-        return new Subtask(name, description, id, status, epicId);
+    private Subtask createSubtaskFromParts(String name, String description, int id, TaskStatus status, int epicId,
+                                          java.time.Duration duration, java.time.LocalDateTime startTime) {
+        Subtask subtask = new Subtask(name, description, id, status, epicId);
+        subtask.setDuration(duration);
+        if (startTime != null) {
+            subtask.setStartTime(startTime);
+        }
+        return subtask;
     }
 
     /**
-     * Чтение содержимого файла
+     * Прочитать строки из файла
      * @param file файл для чтения
      * @return массив строк из файла
      * @throws IOException если произошла ошибка при чтении файла
      */
     private static String[] readFileLines(File file) throws IOException {
-        System.out.println("[DEBUG] Загружаем файл: " + file.getAbsolutePath());
         String content = Files.readString(file.toPath());
+        System.out.println("[DEBUG] Прочитан файл: " + file.getAbsolutePath());
+        System.out.println("[DEBUG] Размер содержимого: " + content.length() + " байт");
         return content.split("\n");
     }
 
     /**
      * Парсинг задач из строк файла
-     * @param manager менеджер задач для парсинга
+     * @param manager менеджер задач
      * @param lines строки из файла
-     * @return объект, содержащий распарсенные задачи и индекс последней строки
+     * @return результат парсинга
      */
     private static TaskParsingResult parseTasksFromLines(FileBackedTaskManager manager, String[] lines) {
-        int lineIndex = 1; // Пропускаем заголовок
-
-        // Создаем временные списки для задач, эпиков и подзадач
         Map<Integer, Task> tasksMap = new HashMap<>();
         Map<Integer, Epic> epicsMap = new HashMap<>();
         Map<Integer, Subtask> subtasksMap = new HashMap<>();
 
-        // Сначала загружаем все задачи из файла
-        System.out.println("[DEBUG] Начинаем загрузку задач из файла");
+        int lineIndex = 1; // Пропускаем заголовок
         while (lineIndex < lines.length && !lines[lineIndex].isBlank()) {
             String line = lines[lineIndex];
             Task task = manager.fromString(line);
@@ -214,9 +247,8 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
             lineIndex++;
         }
 
-        System.out.println("[DEBUG] Загружено задач: " + tasksMap.size());
-        System.out.println("[DEBUG] Загружено эпиков: " + epicsMap.size());
-        System.out.println("[DEBUG] Загружено подзадач: " + subtasksMap.size());
+        System.out.println("[DEBUG] Распарсено задач: " + tasksMap.size() + ", эпиков: " + epicsMap.size() +
+                ", подзадач: " + subtasksMap.size());
 
         return new TaskParsingResult(tasksMap, epicsMap, subtasksMap, lineIndex);
     }
@@ -227,8 +259,10 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
      * @param subtasksMap карта подзадач
      */
     private static void restoreEpicSubtaskLinks(Map<Integer, Epic> epicsMap, Map<Integer, Subtask> subtasksMap) {
+        // Восстанавливаем связи между эпиками и подзадачами
         for (Subtask subtask : subtasksMap.values()) {
-            Epic epic = epicsMap.get(subtask.getEpicId());
+            int epicId = subtask.getEpicId();
+            Epic epic = epicsMap.get(epicId);
             if (epic != null) {
                 epic.addSubtaskId(subtask.getId());
             }
@@ -236,7 +270,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
     }
 
     /**
-     * Создание менеджера с отключенным автосохранением
+     * Создать менеджер с отключенным автосохранением
      * @param file файл для сохранения данных
      * @return менеджер с отключенным автосохранением
      */
@@ -252,12 +286,12 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
     }
 
     /**
-     * Добавление задач в менеджер с отображением старых ID на новые
+     * Добавление задач в менеджер с сохранением оригинальных ID
      * @param loadedManager менеджер для добавления задач
      * @param tasksMap карта обычных задач
      * @param epicsMap карта эпиков
      * @param subtasksMap карта подзадач
-     * @return объект, содержащий карты соответствия старых и новых ID
+     * @return объект, содержащий карты соответствия старых и новых ID (в данной реализации старые и новые ID совпадают)
      */
     private static IdMappingResult addTasksToManager(
             FileBackedTaskManager loadedManager,
@@ -266,6 +300,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
             Map<Integer, Subtask> subtasksMap) {
 
         // Создаем карты для отслеживания соответствия старых и новых ID
+        // В данной реализации старые и новые ID совпадают
         Map<Integer, Integer> oldToNewTaskIds = new HashMap<>();
         Map<Integer, Integer> oldToNewEpicIds = new HashMap<>();
         Map<Integer, Integer> oldToNewSubtaskIds = new HashMap<>();
@@ -273,48 +308,66 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
         // Добавляем задачи в менеджер в правильном порядке
         // Сначала эпики
         for (Epic epic : epicsMap.values()) {
-            int oldId = epic.getId();
+            int id = epic.getId();
 
             // Создаем новый эпик с тем же именем и описанием
             Epic newEpic = new Epic(epic.getName(), epic.getDescription());
-            loadedManager.createEpic(newEpic);
-            int newId = newEpic.getId();
+            // Устанавливаем оригинальный ID
+            newEpic.setId(id);
+            // Копируем время начала и продолжительность
+            newEpic.setStartTime(epic.getStartTime());
+            newEpic.setDuration(epic.getDuration());
+            newEpic.setEndTime(epic.getEndTime());
 
-            // Запоминаем соответствие старого и нового ID
-            oldToNewEpicIds.put(oldId, newId);
+            // Добавляем эпик в менеджер, сохраняя оригинальный ID
+            loadedManager.addEpicWithId(newEpic);
+
+            // Запоминаем соответствие ID (в данном случае они совпадают)
+            oldToNewEpicIds.put(id, id);
         }
 
         // Затем подзадачи
         for (Subtask subtask : subtasksMap.values()) {
-            int oldId = subtask.getId();
-            int oldEpicId = subtask.getEpicId();
+            int id = subtask.getId();
+            int epicId = subtask.getEpicId();
 
-            // Получаем новый ID эпика
-            Integer newEpicId = oldToNewEpicIds.get(oldEpicId);
-            if (newEpicId == null) {
+            // Проверяем, что эпик существует
+            if (!oldToNewEpicIds.containsKey(epicId)) {
                 continue;
             }
 
-            // Создаем новую подзадачу с тем же именем и описанием, но с новым ID эпика
-            Subtask newSubtask = new Subtask(subtask.getName(), subtask.getDescription(), subtask.getStatus(), newEpicId);
-            loadedManager.createSubtask(newSubtask);
-            int newId = newSubtask.getId();
+            // Создаем новую подзадачу с тем же именем, описанием и ID эпика
+            Subtask newSubtask = new Subtask(subtask.getName(), subtask.getDescription(), subtask.getStatus(), epicId);
+            // Устанавливаем оригинальный ID
+            newSubtask.setId(id);
+            // Копируем время начала и продолжительность
+            newSubtask.setStartTime(subtask.getStartTime());
+            newSubtask.setDuration(subtask.getDuration());
 
-            // Запоминаем соответствие старого и нового ID
-            oldToNewSubtaskIds.put(oldId, newId);
+            // Добавляем подзадачу в менеджер, сохраняя оригинальный ID
+            loadedManager.addSubtaskWithId(newSubtask);
+
+            // Запоминаем соответствие ID (в данном случае они совпадают)
+            oldToNewSubtaskIds.put(id, id);
         }
 
         // И наконец обычные задачи
         for (Task task : tasksMap.values()) {
-            int oldId = task.getId();
+            int id = task.getId();
 
             // Создаем новую задачу с тем же именем, описанием и статусом
             Task newTask = new Task(task.getName(), task.getDescription(), task.getStatus());
-            loadedManager.createTask(newTask);
-            int newId = newTask.getId();
+            // Устанавливаем оригинальный ID
+            newTask.setId(id);
+            // Копируем время начала и продолжительность
+            newTask.setStartTime(task.getStartTime());
+            newTask.setDuration(task.getDuration());
 
-            // Запоминаем соответствие старого и нового ID
-            oldToNewTaskIds.put(oldId, newId);
+            // Добавляем задачу в менеджер, сохраняя оригинальный ID
+            loadedManager.addTaskWithId(newTask);
+
+            // Запоминаем соответствие ID (в данном случае они совпадают)
+            oldToNewTaskIds.put(id, id);
         }
 
         return new IdMappingResult(oldToNewTaskIds, oldToNewEpicIds, oldToNewSubtaskIds);
@@ -354,46 +407,47 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
                 int oldId = Integer.parseInt(idStr);
                 System.out.println("[DEBUG] Обрабатываем ID из истории: " + oldId);
 
-                // Проверяем, есть ли задача с таким ID в карте задач
+                // Получаем новый ID из карты соответствия
                 Integer newTaskId = idMappingResult.oldToNewTaskIds.get(oldId);
-                if (newTaskId != null) {
-                    System.out.println("[DEBUG] Найден новый ID задачи: " + newTaskId);
-                    Task task = loadedManager.getTaskById(newTaskId);
-                    System.out.println("[DEBUG] Задача добавлена в историю: " + (task != null));
-                    continue;
-                }
-
-                // Проверяем, есть ли эпик с таким ID в карте эпиков
                 Integer newEpicId = idMappingResult.oldToNewEpicIds.get(oldId);
-                if (newEpicId != null) {
-                    System.out.println("[DEBUG] Найден новый ID эпика: " + newEpicId);
-                    Epic epic = loadedManager.getEpicById(newEpicId);
-                    System.out.println("[DEBUG] Эпик добавлен в историю: " + (epic != null));
-                    continue;
-                }
-
-                // Проверяем, есть ли подзадача с таким ID в карте подзадач
                 Integer newSubtaskId = idMappingResult.oldToNewSubtaskIds.get(oldId);
-                if (newSubtaskId != null) {
-                    System.out.println("[DEBUG] Найден новый ID подзадачи: " + newSubtaskId);
-                    Subtask subtask = loadedManager.getSubtaskById(newSubtaskId);
-                    System.out.println("[DEBUG] Подзадача добавлена в историю: " + (subtask != null));
-                    continue;
-                }
 
-                System.out.println("[DEBUG] Не найдено соответствие для ID: " + oldId);
+                // Определяем тип задачи и добавляем ее в историю
+                if (newTaskId != null) {
+                    System.out.println("[DEBUG] Найдена обычная задача с ID: " + newTaskId);
+                    Task task = loadedManager.getTaskById(newTaskId);
+                    if (task != null) {
+                        System.out.println("[DEBUG] Добавляем задачу в историю: " + task);
+                    } else {
+                        System.out.println("[DEBUG] Задача не найдена: " + newTaskId);
+                    }
+                } else if (newEpicId != null) {
+                    System.out.println("[DEBUG] Найден эпик с ID: " + newEpicId);
+                    Epic epic = loadedManager.getEpicById(newEpicId);
+                    if (epic != null) {
+                        System.out.println("[DEBUG] Добавляем эпик в историю: " + epic);
+                    } else {
+                        System.out.println("[DEBUG] Эпик не найден: " + newEpicId);
+                    }
+                } else if (newSubtaskId != null) {
+                    System.out.println("[DEBUG] Найдена подзадача с ID: " + newSubtaskId);
+                    Subtask subtask = loadedManager.getSubtaskById(newSubtaskId);
+                    if (subtask != null) {
+                        System.out.println("[DEBUG] Добавляем подзадачу в историю: " + subtask);
+                    } else {
+                        System.out.println("[DEBUG] Подзадача не найдена: " + newSubtaskId);
+                    }
+                } else {
+                    System.out.println("[DEBUG] Не найдено соответствие для ID: " + oldId);
+                }
             }
         } else {
-            System.out.println("[DEBUG] Строка с историей пуста или отсутствует");
+            System.out.println("[DEBUG] Строка с историей пустая или отсутствует");
         }
-
-        // Проверяем историю
-        System.out.println("[DEBUG] Проверяем историю");
-        System.out.println("[DEBUG] Размер истории: " + loadedManager.getHistory().size());
     }
 
     /**
-     * Вспомогательный класс для хранения результатов парсинга задач
+     * Результат парсинга задач из файла
      */
     private static class TaskParsingResult {
         final Map<Integer, Task> tasksMap;
@@ -411,7 +465,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
     }
 
     /**
-     * Вспомогательный класс для хранения карт соответствия старых и новых ID
+     * Результат отображения старых ID на новые
      */
     private static class IdMappingResult {
         final Map<Integer, Integer> oldToNewTaskIds;
@@ -544,5 +598,4 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
         super.deleteAllSubtasks();
         save();
     }
-
 }
