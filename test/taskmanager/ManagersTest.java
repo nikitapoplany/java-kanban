@@ -3,6 +3,11 @@ package taskmanager;
 import taskmanager.model.Task;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import taskmanager.service.HistoryManager;
+import taskmanager.service.Managers;
+import taskmanager.service.TaskManager;
+import taskmanager.service.impl.InMemoryHistoryManager;
+import taskmanager.service.impl.InMemoryTaskManager;
 
 import static org.junit.jupiter.api.Assertions.*;
 

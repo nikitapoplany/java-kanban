@@ -1,4 +1,4 @@
-package taskmanager;
+package taskmanager.service;
 
 import taskmanager.model.Task;
 

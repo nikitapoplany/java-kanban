@@ -6,8 +6,19 @@
   <component name="ChangeListManager">
     <list default="true" id="207edbf2-3d6e-40d2-a9b1-d98760be34cc" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/taskmanager/model/Subtask.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/taskmanager/model/Subtask.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/taskmanager/model/Task.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/taskmanager/model/Task.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/taskmanager/FileBackedTaskManager.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/taskmanager/HistoryManager.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/taskmanager/InMemoryHistoryManager.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/taskmanager/InMemoryTaskManager.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/taskmanager/Managers.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/taskmanager/TaskManager.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/taskmanager/FileBackedTaskManagerSpecificTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/test/taskmanager/FileBackedTaskManagerSpecificTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/taskmanager/FileBackedTaskManagerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/test/taskmanager/FileBackedTaskManagerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/taskmanager/InMemoryHistoryManagerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/test/taskmanager/InMemoryHistoryManagerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/taskmanager/InMemoryTaskManagerSpecificTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/test/taskmanager/InMemoryTaskManagerSpecificTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/taskmanager/InMemoryTaskManagerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/test/taskmanager/InMemoryTaskManagerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/taskmanager/ManagersTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/test/taskmanager/ManagersTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/taskmanager/TaskManagerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/test/taskmanager/TaskManagerTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -88,7 +99,7 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="FileBackedTaskManagerSpecificTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="InMemoryTaskManagerSpecificTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="java-kanban" />
       <extension name="coverage">
         <pattern>
@@ -97,22 +108,7 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="taskmanager" />
-      <option name="MAIN_CLASS_NAME" value="taskmanager.FileBackedTaskManagerSpecificTest" />
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="FileBackedTaskManagerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="java-kanban" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="taskmanager.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="taskmanager" />
-      <option name="MAIN_CLASS_NAME" value="taskmanager.FileBackedTaskManagerTest" />
+      <option name="MAIN_CLASS_NAME" value="taskmanager.InMemoryTaskManagerSpecificTest" />
       <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -133,7 +129,7 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="taskmanager in java-kanban" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="ManagersTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="java-kanban" />
       <extension name="coverage">
         <pattern>
@@ -142,7 +138,23 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="taskmanager" />
-      <option name="TEST_OBJECT" value="package" />
+      <option name="MAIN_CLASS_NAME" value="taskmanager.ManagersTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="TaskTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="java-kanban" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="taskmanager.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="taskmanager" />
+      <option name="MAIN_CLASS_NAME" value="taskmanager.TaskTest" />
+      <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -150,10 +162,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="Application.Main" />
-        <item itemvalue="JUnit.FileBackedTaskManagerSpecificTest" />
-        <item itemvalue="JUnit.FileBackedTaskManagerTest" />
+        <item itemvalue="JUnit.TaskTest" />
+        <item itemvalue="JUnit.ManagersTest" />
         <item itemvalue="JUnit.InMemoryTaskManagerTest" />
-        <item itemvalue="JUnit.taskmanager in java-kanban" />
+        <item itemvalue="JUnit.InMemoryTaskManagerSpecificTest" />
       </list>
     </recent_temporary>
   </component>
@@ -173,7 +185,7 @@
       <option name="presentableId" value="Default" />
       <updated>1754414561344</updated>
       <workItem from="1754414563146" duration="241000" />
-      <workItem from="1756237502109" duration="6118000" />
+      <workItem from="1756237502109" duration="8072000" />
     </task>
     <servers />
   </component>
