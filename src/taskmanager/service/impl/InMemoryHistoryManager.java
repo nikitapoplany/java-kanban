@@ -1,6 +1,7 @@
-package taskmanager;
+package taskmanager.service.impl;
 
 import taskmanager.model.Task;
+import taskmanager.service.HistoryManager;
 
 import java.util.ArrayList;
 import java.util.HashMap;
