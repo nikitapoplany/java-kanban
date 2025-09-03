@@ -39,7 +39,7 @@ public class HttpTaskServer {
     public HttpTaskServer(TaskManager taskManager) throws IOException {
         this.taskManager = taskManager;
         server = HttpServer.create(new InetSocketAddress("localhost", PORT), 0);
-        
+
         // Регистрация обработчиков для различных путей
         server.createContext("/tasks", new TaskHandler(taskManager));
         server.createContext("/subtasks", new SubtaskHandler(taskManager));

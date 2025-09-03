@@ -38,7 +38,7 @@ public class TaskHandler extends BaseHttpHandler implements HttpHandler {
             // Обработка запросов к конкретной задаче по ID
             if (path.matches("/tasks/\\d+")) {
                 int taskId = Integer.parseInt(path.substring(path.lastIndexOf('/') + 1));
-                
+
                 switch (method) {
                     case "GET":
                         handleGetTaskById(exchange, taskId);
@@ -114,13 +114,13 @@ public class TaskHandler extends BaseHttpHandler implements HttpHandler {
         try {
             String body = readText(exchange);
             Task task = gson.fromJson(body, Task.class);
-            
+
             if (task == null) {
                 exchange.sendResponseHeaders(400, 0); // Bad Request
                 exchange.close();
                 return;
             }
-            
+
             if (task.getId() == 0) {
                 // Создание новой задачи
                 try {
@@ -137,7 +137,7 @@ public class TaskHandler extends BaseHttpHandler implements HttpHandler {
                     sendNotFound(exchange);
                     return;
                 }
-                
+
                 try {
                     taskManager.updateTask(task);
                     sendCreated(exchange);

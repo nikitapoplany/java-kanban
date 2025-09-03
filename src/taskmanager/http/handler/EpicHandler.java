@@ -52,7 +52,7 @@ public class EpicHandler extends BaseHttpHandler implements HttpHandler {
             // Обработка запросов к конкретному эпику по ID
             if (path.matches("/epics/\\d+")) {
                 int epicId = Integer.parseInt(path.substring(path.lastIndexOf('/') + 1));
-                
+
                 switch (method) {
                     case "GET":
                         handleGetEpicById(exchange, epicId);
@@ -144,13 +144,13 @@ public class EpicHandler extends BaseHttpHandler implements HttpHandler {
         try {
             String body = readText(exchange);
             Epic epic = gson.fromJson(body, Epic.class);
-            
+
             if (epic == null) {
                 exchange.sendResponseHeaders(400, 0); // Bad Request
                 exchange.close();
                 return;
             }
-            
+
             if (epic.getId() == 0) {
                 // Создание нового эпика
                 taskManager.createEpic(epic);
@@ -162,7 +162,7 @@ public class EpicHandler extends BaseHttpHandler implements HttpHandler {
                     sendNotFound(exchange);
                     return;
                 }
-                
+
                 taskManager.updateEpic(epic);
                 sendCreated(exchange);
             }

@@ -38,7 +38,7 @@ public class SubtaskHandler extends BaseHttpHandler implements HttpHandler {
             // Обработка запросов к конкретной подзадаче по ID
             if (path.matches("/subtasks/\\d+")) {
                 int subtaskId = Integer.parseInt(path.substring(path.lastIndexOf('/') + 1));
-                
+
                 switch (method) {
                     case "GET":
                         handleGetSubtaskById(exchange, subtaskId);
@@ -114,13 +114,13 @@ public class SubtaskHandler extends BaseHttpHandler implements HttpHandler {
         try {
             String body = readText(exchange);
             Subtask subtask = gson.fromJson(body, Subtask.class);
-            
+
             if (subtask == null) {
                 exchange.sendResponseHeaders(400, 0); // Bad Request
                 exchange.close();
                 return;
             }
-            
+
             if (subtask.getId() == 0) {
                 // Создание новой подзадачи
                 try {
@@ -137,7 +137,7 @@ public class SubtaskHandler extends BaseHttpHandler implements HttpHandler {
                     sendNotFound(exchange);
                     return;
                 }
-                
+
                 try {
                     taskManager.updateSubtask(subtask);
                     sendCreated(exchange);
