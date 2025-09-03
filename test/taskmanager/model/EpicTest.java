@@ -1,4 +1,4 @@
-package taskmanager;
+package taskmanager.model;
 
 import taskmanager.model.Epic;
 import taskmanager.model.Subtask;
