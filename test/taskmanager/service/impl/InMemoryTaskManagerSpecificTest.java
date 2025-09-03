@@ -1,8 +1,9 @@
-package taskmanager;
+package taskmanager.service.impl;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import taskmanager.model.Task;
+import taskmanager.service.TaskManagerTest;
 import taskmanager.service.impl.InMemoryTaskManager;
 
 import java.util.List;

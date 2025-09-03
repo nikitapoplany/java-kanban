@@ -1,4 +1,4 @@
-package taskmanager;
+package taskmanager.model;
 
 import taskmanager.model.Task;
 import taskmanager.model.TaskStatus;
