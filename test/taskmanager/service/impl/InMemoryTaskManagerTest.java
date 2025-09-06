@@ -1,4 +1,4 @@
-package taskmanager;
+package taskmanager.service.impl;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -7,6 +7,7 @@ import taskmanager.model.Epic;
 import taskmanager.model.Subtask;
 import taskmanager.model.Task;
 import taskmanager.model.TaskStatus;
+import taskmanager.service.TaskManagerTest;
 import taskmanager.service.impl.InMemoryTaskManager;
 
 import java.util.List;
